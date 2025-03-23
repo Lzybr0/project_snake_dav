@@ -46,7 +46,7 @@ vec2 berry;
 //Function decleration
 
 void record();
-//int highest_score();
+int highest_score();
 void init(); 
 void process_input();
 void restart_game();
@@ -62,7 +62,7 @@ bool collide_snake_body(vec2 point);
 
 int main(){
     int choice = 0;
-
+    record();
     printf("========== Snake game ============");
     printf("\n1. Start game");
     printf("\n2. Select level");
@@ -131,31 +131,29 @@ void record(){
      scanf("%s",a.name);
      fprintf(fp,"\nName = %s",a.name);
      
-     fp = fopen("records.txt","r");
-     
-     fscanf(fp,"%s",a.name);
+     //fp = fopen("records.txt","r");
+    
      fclose(fp);  
 }
 
 
-/*
+
 int  highest_score() {
      FILE *fp;
      char ch;
      fp = fopen("records.txt","");
-     ch = getc(fp);
      if (fp == NULL){
         perror("\nError opening file");
         return 1;
      }
-     printf("\n Contents of : ",record);
+     printf("\n Contents of %s : ",record);
      while( (ch = fgetc(fp)) != EOF ){
           putchar(ch);
      }     
      fclose(fp);
      return 0;
 }     
-*/
+
  
 void guidelines() {
            printf("\n==============================HELP_GUIDE================================================");
