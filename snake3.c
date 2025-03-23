@@ -156,16 +156,15 @@ void record(){
         return;
      }
 
-     fprintf(fp,"Name: %s, Score: %d\n",a.name, a.score);
+     fprintf(fp,"%s %d\n",a.name, a.score);
       
      fclose(fp);  
 }
 
 void  highest_score() {
      FILE *fp;
-     char name[100];
-     int score;
-
+     char line[100];
+    
      fp = fopen("records.txt","r");
      if (fp == NULL){
         perror("\nError opening file");
@@ -173,8 +172,8 @@ void  highest_score() {
      }
 
      printf("\n====== Highest Score Record ======\n");
-     while(fscanf(fp, "%s %d", name, &score) == 2){
-          printf("Name: %s, Score: %d\n",name, score);
+     while ( fgets (line, sizeof(line), fp)) {
+          printf("%s", line);
      }     
 
      fclose(fp);
@@ -388,10 +387,12 @@ void restart_game() {
      sprintf(score_message, "[ Score: %d ]",score);
 
      is_running = true;
-}
-}
+     
+     init();
 
-/*
+     }
+}
+        
 void game_over() {
      int key;
      record();
@@ -400,43 +401,32 @@ void game_over() {
      while (true) {
            erase();
            mvaddstr(screen_height / 2, screen_width -16, "          Game Over       ");
-           mvaddstr(screen_height / 2 + 1, screen_width - 16, "[SPACE] to restart, [M] to Menu");
-
-           attron(COLOR_PAIR(3));
-           draw_border(screen_height / 2 - 1, screen_width - 17, 17, 2);
-           refresh();;
-
-           key = wgetch(win);
-           if (key == ' ' ) {
-              restart_game();
-              return;
-           }
-           else if (key == 'm' || key == 'M') {
-                 endwin();
-                 return;
-           }
-      usleep(snake_speed);;
-      refresh();
-      }
-}      
-
-*/
-
-   
-     
-void game_over() {
-     record();
-
-     while (is_running == false) {
-           process_input();
-
-           mvaddstr(screen_height / 2, screen_width -16, "          Game Over       ");
            mvaddstr(screen_height / 2 + 1, screen_width - 16, "[SPACE] to restart, [M] to menu ");
 
            attron(COLOR_PAIR(3));
            draw_border(screen_height / 2 - 1, screen_width - 17, 17, 2);
            attroff(COLOR_PAIR(3));
+           
+           refresh();
 
+           key = wgetch(win);
+           mvprintw(screen_height / 2 + 2, screen_width -16, "Pressed: %d",key);
+
+           if (key == ' ') {
+              mvprintw(screen_height / 2 + 3, screen_width -16, "Restarting...");
+              refresh();
+              usleep(500000);
+              restart_game();
+          /*    endwin();
+              init();
+              is_running = true; */
+              return;
+            }
+
+            else if (key == 'm' || key == 'M' ) {
+                endwin();
+                main();
+           }     
            usleep(snake_speed);
       }
 }      
