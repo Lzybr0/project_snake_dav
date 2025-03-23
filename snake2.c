@@ -68,7 +68,7 @@ void quit_game();
 int main(){
     int choice = 0, level = 0;
     record();
-Menu:
+    while(1) {
     printf("========== Snake game ============");
     printf("\n1. Start game");
     printf("\n2. Select level");
@@ -91,7 +91,7 @@ Menu:
          draw();
          }
          quit_game();
-         goto Menu;
+         break;
         
         case 2:
              printf("\nSelect Difficulty Level:");
@@ -116,7 +116,7 @@ Menu:
              }
 
              printf("\nDifficulty set! Press 1 in the main menu to start.\n");
-        goto Menu;
+        break;
          
         case 3:
             highest_score();
@@ -124,21 +124,29 @@ Menu:
 
         case 4:
             guidelines();
-        goto Menu;
+        break;
 
         case 5:
             quit_game() ;
         break;
 }
+}
 
 void record(){
-     r a;
+     static r a;
      FILE *fp;
+     if (!name_entered) {
+        printf("\n Enter your name: ");
+        scanf("%s",a.name);
+        name_entered = true;
+     }
+
      fp = fopen("records.txt","a");
-     printf("\n Enter your name: ");
-     scanf("%s",a.name);
+     if (fp == NULL) {
+        perror("Error opening file");
+     }
+
      fprintf(fp,"\nName = %s",a.name);
-     
      a.score = score;
      
      fclose(fp);  
