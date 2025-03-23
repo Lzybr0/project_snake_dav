@@ -116,7 +116,6 @@ int main(){
                  printf("\nInvalid choice! Defaulting to Medium.");
                  snake_speed = MEDIUM_SPEED;
              }
-
              printf("\nDifficulty set! Press 1 in the main menu to start.\n");
              printf("\n");
         break;
@@ -192,7 +191,6 @@ void guidelines() {
            printf("\n4.Objective: ");
            printf("\nThe goal is to make the snake as long as possible before the game ends.");
            printf("\n===============================THANK YOU================================================");
-
 }
       
 void init() { 
